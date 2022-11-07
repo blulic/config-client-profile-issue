@@ -1,0 +1,9 @@
+---
+spring:
+  config:
+    activate:
+      on-profile: test2
+app:
+  config:
+    client:
+      value2: "2Atest2"

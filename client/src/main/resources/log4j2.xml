@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <Properties>
+    <Property name="logdir">${sys:user.dir}/logs</Property>
+    <Property name="logNamePrefix">client</Property>
+  </Properties>
+  <Appenders>
+    <Console name="CONSOLE" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{ISO8601} [%t] [%X{X-Tx-Id}] %-5p %c{3} %x - %enc{%m}{CRLF}%n" />
+    </Console>
+    <RollingFile name="LOG_FILE" fileName="${logdir}/${logNamePrefix}.log"
+                 filePattern="${logdir}/${logNamePrefix}-%d{yyyy-MM-dd-HH}-%i.log.gz">
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+      </Policies>
+      <PatternLayout pattern="%d{ISO8601} [%t] [%X{X-Tx-Id}] %-5p %c{3} %x - %enc{%m}{CRLF}%n" />
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Logger name="eu.borislulic.github.config.client" level="DEBUG" additivity="false">
+      <AppenderRef ref="CONSOLE" />
+      <AppenderRef ref="LOG_FILE" />
+    </Logger>
+
+    <Logger name="org.springframework.cloud.config.client" level="DEBUG" additivity="false">
+      <AppenderRef ref="CONSOLE" />
+      <AppenderRef ref="LOG_FILE" />
+    </Logger>
+
+    <Root level="INFO">
+      <AppenderRef ref="CONSOLE" />
+    </Root>
+  </Loggers>
+</Configuration>

@@ -1,1 +1,4 @@
 rootProject.name = 'profile-issue'
+include 'server'
+include 'client'
+

@@ -1,0 +1,9 @@
+---
+spring:
+  config:
+    activate:
+      on-profile: test4
+app:
+  config:
+    client:
+      value4: "4Ctest4"

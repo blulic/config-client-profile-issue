@@ -1,0 +1,9 @@
+---
+spring:
+  config:
+    activate:
+      on-profile: test3
+app:
+  config:
+    client:
+      value3: "3Ctest3"

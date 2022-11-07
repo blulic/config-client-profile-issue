@@ -1,0 +1,38 @@
+app:
+  config:
+    client:
+      value1: "1A"
+      value2: "2A"
+      value3: "3A"
+      value4: "4A"
+
+spring:
+  application:
+    name: configclient
+  cloud:
+    config:
+      enabled: true
+      fail-fast: true
+      url: http://localhost:8888
+  config:
+    import: "configserver:"
+  profiles:
+    active: test1,test2,test3,test4
+---
+spring:
+  config:
+    activate:
+      on-profile: test1
+app:
+  config:
+    client:
+      value1: "1Atest1"
+---
+spring:
+  config:
+    activate:
+      on-profile: test3
+app:
+  config:
+    client:
+      value3: "3Atest3"
