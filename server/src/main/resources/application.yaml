@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: config-server
+
+  cloud:
+    bus:
+      enabled: false
+    config:
+      server:
+        native:
+          searchLocations:
+           - "file:${user.dir}/src/main/resources/cloud-config"
+           - "file:${user.dir}/src/main/resources/cloud-config/{application}"
+           - "file:${user.dir}/src/main/resources/cloud-config/{application}-{profile}"
+#            - "classpath:/cloud-config/{application}"
+#            - "classpath:/cloud-config/{application}-{profile}"
+  profiles:
+    active: native
+management:
+  health:
+    # disable rabbitmq health check for spring cloud server unless spring cloud bus is enabled
+    binders:
+      enabled: false
+    rabbit:
+      enabled: false
+  endpoints:
+    web:
+      base-path: /management
+  server:
+    port: 8889
+
+server:
+  port: 8888
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: ${user.dir}/logs
+      file-date-format: ".yyyy-MM-dd-HH"
+      pattern: '%t|%{User-Agent}i|%m|%U|%q|%s|%B|%D|%{Content-Length}i|%A'
+      prefix: access
+      rename-on-rotate: false
+      suffix: .log

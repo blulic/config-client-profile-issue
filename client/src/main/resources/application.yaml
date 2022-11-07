@@ -1,0 +1,37 @@
+app:
+  config:
+    client:
+      value1: "1A"
+      value2: "2A"
+
+management:
+  endpoints:
+    web:
+      base-path: /management
+  server:
+    port: 8081
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: configclient
+  cloud:
+    config:
+      enabled: true
+      fail-fast: true
+      url: http://localhost:8888
+  config:
+    import: "configserver:"
+  profiles:
+    active: test1,test2
+---
+spring:
+  config:
+    activate:
+      on-profile: test1
+#app:
+#  config:
+#    client:
+#      value1: "1Atest1"

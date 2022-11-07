@@ -1,0 +1,23 @@
+#app:
+#  config:
+#    client:
+#      value1: "1C"
+#      value2: "2C"
+---
+app:
+  config:
+    client:
+      value1: "1Ctest1"
+spring:
+  config:
+    activate:
+      on-profile: test1
+---
+app:
+  config:
+    client:
+      value2: "2Ctest2"
+spring:
+  config:
+    activate:
+      on-profile: test2

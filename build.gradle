@@ -1,32 +1,43 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+}
+
 plugins {
-	id 'org.springframework.boot' version '2.7.5'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id 'java'
+  id 'org.springframework.boot' version "${springBootVersion}" apply false
+  id 'io.spring.dependency-management' version "${springDepMgmtVersion}"
+  id "io.freefair.lombok" version "${lombokPluginVersion}" apply false
 }
 
-group = 'eu.borislulic.github.config'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+subprojects {
 
-repositories {
-	mavenCentral()
-}
+  repositories {
+    mavenCentral()
+  }
 
-ext {
-	set('springCloudVersion', "2021.0.4")
-}
+  apply plugin: 'java'
+  apply plugin: 'org.springframework.boot'
+  apply plugin: 'io.spring.dependency-management'
 
-dependencies {
-	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
+  afterEvaluate {
+    targetCompatibility = '11'
+    sourceCompatibility = '11'
+  }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
-}
+  configurations.all {
+    // exclude the default module in order not use the default spring boot logback implementation and to instead use the Log4j2 implementation
+    exclude module: 'spring-boot-starter-logging'
+  }
 
-tasks.named('test') {
-	useJUnitPlatform()
+  dependencyManagement {
+    imports {
+      //mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+      mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+  }
+
+  test {
+    useJUnitPlatform()
+  }
 }
